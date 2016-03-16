@@ -1,0 +1,83 @@
+{{#layout}}
+
+  {{#resource logicalId="Vpc"}}
+    "Type": "AWS::CloudFormation::Stack",
+     "Properties": {
+      "TemplateURL": "{{templateS3Url 'module:particles-vpc' 'simple/vpc.template.json'}}",
+       "Parameters": {
+         "VpcCidr": "10.5.0.0/16",
+         "CreateVpcSecurityGroup": "false",
+         "OpenVpcCommunication": "false",
+         "CreateInternetGateway": "true",
+         "NameTag": "test-vpc"
+       }
+    }
+  {{/resource}}
+
+  {{#resource logicalId="PublicSubnet"}}
+    "Type": "AWS::CloudFormation::Stack",
+     "Properties": {
+      "TemplateURL": "{{templateS3Url 'module:particles-vpc' 'simple/subnet.template.json'}}",
+       "Parameters": {
+         "NameTag": "PublicSubnet",
+         "VpcId": {"Fn::GetAtt": [ "Vpc", "Outputs.VpcId" ] },
+         "SubnetCidr": "10.5.0.0/20",
+         "RouteTableId": {"Fn::GetAtt": [ "Vpc", "Outputs.RouteTableId" ] }
+       }
+    }
+  {{/resource}}
+
+  {{#resource logicalId="PrivateSubnet"}}
+    "Type": "AWS::CloudFormation::Stack",
+     "Properties": {
+      "TemplateURL": "{{templateS3Url 'module:particles-vpc' 'simple/subnet.template.json'}}",
+       "Parameters": {
+         "NameTag": "PrivateSubnet",
+         "VpcId": {"Fn::GetAtt": [ "Vpc", "Outputs.VpcId" ] },
+         "SubnetCidr": "10.5.16.0/20",
+         "RouteTableId": {"Fn::GetAtt": [ "NatGateway", "Outputs.NatRouteTableId" ] },
+         "AvailabilityZone": {"Fn::GetAtt": [ "PublicSubnet", "Outputs.AvailabilityZone" ] }
+       }
+    }
+  {{/resource}}
+
+  {{#resource logicalId="NatGateway"}}
+    "Type": "AWS::CloudFormation::Stack",
+     "Properties": {
+      "TemplateURL": "{{templateS3Url 'natgateway.template.json'}}",
+       "Parameters": {
+         "VpcId": {"Fn::GetAtt": [ "Vpc", "Outputs.VpcId" ] },
+         "PublicSubnetId": {"Fn::GetAtt": [ "PublicSubnet", "Outputs.SubnetId" ] }
+       }
+    }
+  {{/resource}}
+
+  {{#output logicalId="PublicSubnetId"}}
+    "Value": {"Fn::GetAtt": [ "PublicSubnet", "Outputs.SubnetId" ] }
+  {{/output}}
+
+  {{#output logicalId="PublicSubnetAvailabilityZone"}}
+    "Value": {"Fn::GetAtt": [ "PublicSubnet", "Outputs.AvailabilityZone" ] }
+  {{/output}}
+
+  {{#output logicalId="PrivateSubnetId"}}
+    "Value": {"Fn::GetAtt": [ "PrivateSubnet", "Outputs.SubnetId" ] }
+  {{/output}}
+
+  {{#output logicalId="PrivateSubnetAvailabilityZone"}}
+    "Value": {"Fn::GetAtt": [ "PrivateSubnet", "Outputs.AvailabilityZone" ] }
+  {{/output}}
+
+  {{#output logicalId="NatRouteTableId"}}
+    "Value": {"Fn::GetAtt": [ "NatGateway", "Outputs.NatRouteTableId" ] }
+  {{/output}}
+
+  {{#output logicalId="CustomerRouteTableId"}}
+    "Value": {"Fn::GetAtt": [ "Vpc", "Outputs.RouteTableId" ] }
+  {{/output}}
+
+  {{#output logicalId="NatGatewayId"}}
+    "Value": {"Fn::GetAtt": [ "NatGateway", "Outputs.NatGatewayId" ] }
+  {{/output}}
+
+{{/layout}}

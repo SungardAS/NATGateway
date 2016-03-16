@@ -1,0 +1,60 @@
+{{#layout}}
+
+  {{
+    parameter "module:particles-common-core" "base"
+    logicalId="VpcId"
+    type="AWS::EC2::VPC::Id"
+  }}
+
+  {{
+    parameter "module:particles-common-core" "base"
+    logicalId="PublicSubnetId"
+    type="AWS::EC2::Subnet::Id"
+  }}
+
+  {{#resource logicalId="NatRouteTable"}}
+    "Type": "AWS::EC2::RouteTable",
+    "Properties": {
+      "VpcId": { "Ref": "VpcId" },
+      "Tags": [
+        {
+          "Key": "Name",
+          "Value": "Nat Route Table"
+        }
+      ]
+    }
+  {{/resource}}
+
+  {{#resource logicalId="NAT"}}
+    "Type" : "AWS::EC2::NatGateway",
+    "Properties" : {
+      "AllocationId" : { "Fn::GetAtt" : ["EIP", "AllocationId"]},
+      "SubnetId" : { "Ref": "PublicSubnetId" }
+    }
+  {{/resource}}
+
+  {{#resource logicalId="EIP"}}
+    "Type" : "AWS::EC2::EIP",
+    "Properties" : {
+      "Domain" : "vpc"
+    }
+  {{/resource}}
+
+  {{#resource logicalId="NatRoute"}}
+    "Type" : "AWS::EC2::Route",
+    "Properties" : {
+      "RouteTableId" : { "Ref" : "NatRouteTable" },
+      "DestinationCidrBlock" : "0.0.0.0/0",
+      "NatGatewayId" : { "Ref" : "NAT" }
+    }
+  {{/resource}}
+
+  {{#output logicalId="NatGatewayId"}}
+    "Value": { "Ref" : "NAT" }
+  {{/output}}
+
+  {{#output logicalId="NatRouteTableId"}}
+    "Value": { "Ref" : "NatRouteTable" }
+  {{/output}}
+
+{{/layout}}

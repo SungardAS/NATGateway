@@ -1,0 +1,23 @@
+{
+  "name": "natgateway",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "condensation": "^0.4.10",
+    "config": "^1.12.0",
+    "gulp": "^3.8.11",
+    "particles-common-core": "^0.3.2",
+    "particles-ec2": "^0.2.2",
+    "particles-vpc": "^0.4.0",
+    "git-rev-sync": "^1.4.0",
+    "gulp-git": "^1.4.0",
+    "gulp-zip": "^3.0.2",
+    "vinyl-fs": "^2.1.1"
+  }
+}
