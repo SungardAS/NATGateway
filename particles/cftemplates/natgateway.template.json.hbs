@@ -12,6 +12,18 @@
     type="AWS::EC2::Subnet::Id"
   }}
 
+  {{
+    parameter "module:particles-common-core" "base"
+    logicalId="NameTag"
+    default="default"
+    type="String"
+    description="Set the name tag for vpc."
+    minLength="1"
+    maxLength="255"
+    allowedPattern="[\\x20-\\x7E]*"
+    constraintDescription="can contain only ASCII characters."
+  }}
+
   {{#resource logicalId="NatRouteTable"}}
     "Type": "AWS::EC2::RouteTable",
     "Properties": {
@@ -19,7 +31,7 @@
       "Tags": [
         {
           "Key": "Name",
-          "Value": "Nat Route Table"
+          "Value": {"Fn::Join": [".", [{"Ref": "NameTag"},"nat.route.table"]]}
         }
       ]
     }

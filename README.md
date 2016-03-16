@@ -1,2 +1,2 @@
 # NATGateway
-Cloudformation to build a NatGateway
+Cloudformation to build a NatGateway using condensation

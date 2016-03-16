@@ -9,15 +9,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "condensation": "^0.4.10",
-    "config": "^1.12.0",
-    "gulp": "^3.8.11",
-    "particles-common-core": "^0.3.2",
+    "condensation": "^0.4.9",
+    "config": "^1.16.0",
+    "git-rev-sync": "^1.4.0",
+    "gulp": "^3.9.0",
+    "gulp-git": "^1.7.0",
+    "gulp-zip": "^3.2.0",
+    "particles-common-core": "^0.3.6",
     "particles-ec2": "^0.2.2",
     "particles-vpc": "^0.4.0",
-    "git-rev-sync": "^1.4.0",
-    "gulp-git": "^1.4.0",
-    "gulp-zip": "^3.0.2",
-    "vinyl-fs": "^2.1.1"
+    "vinyl-fs": "^2.3.1"
   }
 }

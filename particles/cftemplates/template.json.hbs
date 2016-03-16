@@ -1,15 +1,60 @@
 {{#layout}}
 
+  {{
+    parameter "module:particles-common-core" "base"
+    logicalId="VpcCidr"
+    type="String"
+    description="VPC Cidr Block. Format: x.x.x.x/x"
+    minLength="9"
+    maxLength="18"
+    allowedPattern="(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})"
+    constraintDescription="must be a valid CIDR range formatted as x.x.x.x/x"
+  }}
+
+  {{
+    parameter "module:particles-common-core" "base"
+    logicalId="PublicCidr"
+    type="String"
+    description="Public Cidr Block. Format: x.x.x.x/x"
+    minLength="9"
+    maxLength="18"
+    allowedPattern="(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})"
+    constraintDescription="must be a valid CIDR range formatted as x.x.x.x/x"
+  }}
+
+  {{
+    parameter "module:particles-common-core" "base"
+    logicalId="PrivateCidr"
+    type="String"
+    description="Private Cidr Block. Format: x.x.x.x/x"
+    minLength="9"
+    maxLength="18"
+    allowedPattern="(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})"
+    constraintDescription="must be a valid CIDR range formatted as x.x.x.x/x"
+  }}
+
+  {{
+    parameter "module:particles-common-core" "base"
+    logicalId="NameTag"
+    default="default"
+    type="String"
+    description="Set the name tag for vpc."
+    minLength="1"
+    maxLength="255"
+    allowedPattern="[\\x20-\\x7E]*"
+    constraintDescription="can contain only ASCII characters."
+  }}
+
   {{#resource logicalId="Vpc"}}
     "Type": "AWS::CloudFormation::Stack",
      "Properties": {
       "TemplateURL": "{{templateS3Url 'module:particles-vpc' 'simple/vpc.template.json'}}",
        "Parameters": {
-         "VpcCidr": "10.5.0.0/16",
+         "VpcCidr": { "Ref": "VpcCidr" },
          "CreateVpcSecurityGroup": "false",
          "OpenVpcCommunication": "false",
          "CreateInternetGateway": "true",
-         "NameTag": "test-vpc"
+         "NameTag": { "Ref": "NameTag" }
        }
     }
   {{/resource}}
@@ -19,9 +64,9 @@
      "Properties": {
       "TemplateURL": "{{templateS3Url 'module:particles-vpc' 'simple/subnet.template.json'}}",
        "Parameters": {
-         "NameTag": "PublicSubnet",
+         "NameTag": {"Fn::Join": [".", [{"Ref": "NameTag"},"public.subnet"]]},
          "VpcId": {"Fn::GetAtt": [ "Vpc", "Outputs.VpcId" ] },
-         "SubnetCidr": "10.5.0.0/20",
+         "SubnetCidr": { "Ref": "PublicCidr" },
          "RouteTableId": {"Fn::GetAtt": [ "Vpc", "Outputs.RouteTableId" ] }
        }
     }
@@ -32,9 +77,9 @@
      "Properties": {
       "TemplateURL": "{{templateS3Url 'module:particles-vpc' 'simple/subnet.template.json'}}",
        "Parameters": {
-         "NameTag": "PrivateSubnet",
+         "NameTag": {"Fn::Join": [".", [{"Ref": "NameTag"},"private.subnet"]]},
          "VpcId": {"Fn::GetAtt": [ "Vpc", "Outputs.VpcId" ] },
-         "SubnetCidr": "10.5.16.0/20",
+         "SubnetCidr": { "Ref": "PrivateCidr" },
          "RouteTableId": {"Fn::GetAtt": [ "NatGateway", "Outputs.NatRouteTableId" ] },
          "AvailabilityZone": {"Fn::GetAtt": [ "PublicSubnet", "Outputs.AvailabilityZone" ] }
        }
