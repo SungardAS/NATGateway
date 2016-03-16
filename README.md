@@ -5,12 +5,12 @@ Particles for [condensation](https://github.com/SungardAS/condensation) that hel
 ## Use
 
     > npm install
-    > gulp
+    > gulp condensation:build
+    > gulp condensation:deploy
 
 Templates will be created in the `dist` directory
 
-To upload to S3 create `config/local.js` with bucket configuation and
-run `gulp deploy`
+To build CloudFormation templates, create `config/local.js` with bucket configuration
 
 ## Particles
 
