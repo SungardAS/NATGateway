@@ -2,3 +2,4 @@ condensation_errors
 config/local*
 dist
 node_modules
+__*
