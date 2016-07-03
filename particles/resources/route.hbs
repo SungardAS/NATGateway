@@ -1,0 +1,9 @@
+{{#resource "m:core" "base"
+  type="AWS::EC2::Route"
+}}
+"Properties": {
+  "RouteTableId": {{helper "m:core" "propertyValue" routeTableId}},
+  "DestinationCidrBlock" : "0.0.0.0/0",
+  "NatGatewayId": {{helper "m:core" "propertyValue" natGatewayId}}
+}
+{{/resource}}

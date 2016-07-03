@@ -1,0 +1,37 @@
+
+{{#
+  resource "route_table"
+  logicalId="NatRouteTable"
+  vpcId=vpcId
+}}
+  "Properties": {
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": {"Fn::Join": [".", [{{helper "m:core" "propertyValue" nameTag}},"NatRouteTable","{{helper "m:core" "propertyValue" logicalIdSuffix}}"]]}
+      }
+    ]
+  }
+{{/resource}}
+
+{{#
+  resource "eip"
+  logicalId="EIP"
+}}
+{{/resource}}
+
+{{#
+  resource "nat_gateway"
+  logicalId="NAT"
+  allocationId=( partial "m:core" "fn_get_att" logicalId=(concat "EIP" logicalIdSuffix) attributeName="AllocationId" )
+  subnetId=publicSubnetId
+}}
+{{/resource}}
+
+{{#
+  resource "route"
+  logicalId="NatRoute"
+  routeTableId=(ref "NatRouteTable")
+  natGatewayId=(ref "NAT")
+}}
+{{/resource}}

@@ -1,6 +1,6 @@
 {
   "name": "particles-nat-gateway",
-  "version": "1.1.0",
+  "version": "0.2.0",
   "description": "Particles for Condensation that help build a AWS NAT Gateway in a VPC",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,9 +19,9 @@
   },
   "license": "ISC",
   "dependencies": {
-    "condensation": "^0.4.10",
-    "config": "^1.16.0",
-    "gulp": "^3.9.0",
-    "particles-common-core": "^0.3.6"
+    "condensation": "^0.5.5",
+    "config": "^1.20.1",
+    "gulp": "^3.9.1",
+    "particles-core": "^0.4.3"
   }
 }

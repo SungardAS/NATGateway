@@ -1,0 +1,8 @@
+{{#resource "m:core" "base"
+  type="AWS::EC2::NatGateway"
+}}
+"Properties": {
+  "AllocationId": {{helper "m:core" "propertyValue" allocationId}},
+  "SubnetId": {{helper "m:core" "propertyValue" subnetId}}
+}
+{{/resource}}
