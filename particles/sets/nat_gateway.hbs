@@ -8,30 +8,24 @@
     "Tags": [
       {
         "Key": "Name",
-        "Value": {"Fn::Join": [".", [{{helper "m:core" "propertyValue" nameTag}},"NatRouteTable","{{helper "m:core" "propertyValue" logicalIdSuffix}}"]]}
+        "Value": {"Fn::Join": [".", [{{helper "m:core" "propertyValue" nameTag}},(scopeId "NatRouteTable")]]}
       }
     ]
   }
 {{/resource}}
 
-{{#
-  resource "eip"
-  logicalId="EIP"
-}}
-{{/resource}}
+{{resource "eip" logicalId="EIP"}}
 
-{{#
+{{
   resource "nat_gateway"
   logicalId="NAT"
-  allocationId=( partial "m:core" "fn_get_att" logicalId=(concat "EIP" logicalIdSuffix) attributeName="AllocationId" )
+  allocationId=( partial "m:core" "fn_get_att" logicalId=(scopeId "EIP") attributeName="AllocationId" )
   subnetId=publicSubnetId
 }}
-{{/resource}}
 
-{{#
+{{
   resource "route"
   logicalId="NatRoute"
   routeTableId=(ref "NatRouteTable")
   natGatewayId=(ref "NAT")
 }}
-{{/resource}}

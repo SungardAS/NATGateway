@@ -1,0 +1,14 @@
+{
+  "NatGateway": {
+    "Properties": {
+      "AllocationId": {
+        "Ref": "EIP"
+      },
+      "SubnetId": {
+        "Ref": "Subnet"
+      }
+    },
+    "Type": "AWS::EC2::NatGateway"
+  }
+}
+

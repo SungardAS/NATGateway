@@ -1,9 +1,16 @@
 {
   "name": "particles-nat-gateway",
   "version": "0.2.1",
+  "publishConfig": {
+    "tag": "latest"
+  },
   "description": "Particles for Condensation that help build a AWS NAT Gateway in a VPC",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha",
+    "build": "./node_modules/.bin/gulp condensation:build",
+    "clean": "./node_modules/.bin/gulp condensation:clean",
+    "deploy": "./node_modules/.bin/gulp condensation:deploy",
+    "gulp": "./node_modules/.bin/gulp"
   },
   "author": {
     "name": "Alex Ough",
@@ -17,11 +24,16 @@
     "type": "git",
     "url": "https://github.com/SungardAS/particles-nat-gateway.git"
   },
-  "license": "ISC",
+  "license": "Apache-2.0",
   "dependencies": {
-    "condensation": "^0.5.5",
-    "config": "^1.20.1",
+    "condensation": "^0.5.6",
+    "config": "^1.21.0",
     "gulp": "^3.9.1",
-    "particles-core": "^0.4.3"
+    "particles-core": "^0.4.5",
+    "particles-vpc": "^0.5.1"
+  },
+  "devDependencies": {
+    "condensation-particle-tests": "^0.5.2",
+    "mocha": "^2.5.3"
   }
 }

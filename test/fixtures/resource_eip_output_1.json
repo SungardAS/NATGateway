@@ -1,0 +1,8 @@
+{
+  "EIP": {
+    "Properties": {
+      "Domain": "vpc"
+    },
+    "Type": "AWS::EC2::EIP"
+  }
+}

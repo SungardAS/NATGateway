@@ -1,8 +1,1 @@
-{{#resource "m:core" "base"
-  type="AWS::EC2::RouteTable"
-}}
-"Properties": {
-  "VpcId": {{helper "m:core" "propertyValue" vpcId}},
-  "Tags": {{helper "m:core" "propertyValue" tags}}
-}
-{{/resource}}
+{{resource "m:vpc" "route_table"}}
