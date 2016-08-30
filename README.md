@@ -1,5 +1,15 @@
 # particles-nat-gateway
 
+[![condensation][condensation-image]][condensation-url]
+
+[![NPM][npm-image]][npm-url]
+[![Gitter][gitter-image]][gitter-url]
+[![Build Status][travis-image]][travis-url]
+[![Dependency Status][daviddm-image]][daviddm-url]
+
+
+## Summary
+
 Particles for [condensation](https://github.com/SungardAS/condensation) that help build an AWS NatGateway.
 
 ## Use
