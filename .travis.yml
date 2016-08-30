@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+- 6
+- 5
+- 4
+- 0.12
+matrix:
+  include:
+  - node_js: 6
+    env: DEPLOY=true
+after_success: if [[ $DEPLOY == "true" ]] ; then ./node_modules/.bin/gulp condensation:deploy
+  ; else echo "no deploy" ; fi
+deploy:
+  provider: npm
+  email: as.us.labs@sungardas.com
+  api_key:
+    secure: H0xcJ0hkBaWeIi1ViC2XLft77dqTkxAE36ql6sUl+rzQG20Qin+P7rEKU7Q8sE9ZGxZyHDpSqBF7lHXzNgOps2fRKGz7yis4QhmIiIIutgrkHrYn+tV54E4wPeUCzSX+rHOlF9jzaITKFYT9PJ/Jz8jIPFaTeFJYEh9K5gDAtSxNCvzyoA+MEB5Jp2hamjTVSgWGRGn6NEdtl66EBe+wUXrULZe6FouPJ2Z0q+q+PKEhSVoXPe+tsNkl8g6vQYs2gCVKMW9MyjKkH14u7ip7gZByF1FSFNW15q/FuSnmi0pz0LzK/zT7GRPnBmorIIt4JOdHmuLj0JA/4FvQGbRQxZK6JOi7axLgYonvLTK0LPXdoZ5GYZP4YF5uZn5l9nQ9dleHpY8sWBgfeXwYpnR6ybDyS3UuIr5XrGp3AMt89YMEdrgI4FyRT43ouz5XnW1ECNfMbQ48mB7w3V+bdBCq+3PdflaF2oKi52cJvSVQMrNHlUSkmjqTxkVHF2KyVNDakc3Ut4KAhO2r35EW1++xMKiE8P7/q9/kUwsGavBESi6djM7eKBDXjOoc4WscnlM81p4AJUhQLvwDw8amlHFRTRKvjignyTBGE5JJe6yCN7TYKC3Qncfpuu+NUn/oESihgeKACdgsAkwlCuM9DjiwMW+IV/XFEHCdBjROHgPa+Sc=
+  on:
+    tags: true
+    repo: SungardAS/particles-nat-gateway
+    node: 6
