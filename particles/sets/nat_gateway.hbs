@@ -8,7 +8,7 @@
     "Tags": [
       {
         "Key": "Name",
-        "Value": {"Fn::Join": [".", [{{helper "m:core" "propertyValue" nameTag}},(scopeId "NatRouteTable")]]}
+        "Value": {"Fn::Join": [".", [{{helper "m:core" "propertyValue" nameTag}},"{{scopeId "NatRouteTable"}}"]]}
       }
     ]
   }
